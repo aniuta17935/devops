@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+#/ command: adamchuk:anna: "show the variable name in red and the value in green"
+#/ usage: rerun adamchuk:anna [options]
+#/ rerun-variables: RERUN, RERUN_VERSION, RERUN_MODULES, RERUN_MODULE_DIR
+#/ option-variables:
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' #No Color
+
+NAMES=(RERUN RERUN_VERSION RERUN_MODULES RERUN_MODULE_DIR)
+VALUES=($RERUN $RERUN_VERSION $RERUN_MODULES $RERUN_MODULE_DIR)
+
+for (( i=0; i < 4; i++ ))
+do
+	printf "${RED}${NAMES[$i]}${NC} = ${GREEN}${VALUES[$i]}${NC}\n"
+done
+
+. "$RERUN_MODULE_DIR/lib/functions.sh" "anna" || { 
+  echo >&2 "Failed loading function library." ; exit 1 ; 
+}
+
+set -o errexit -o nounset -o pipefail
+
+rerun_options_parse "$@"
+
+# Command implementation
+# ----------------------
+
+# - - -
+# Put the command implementation here.
+# - - -
+
+# Done. Exit with last command exit status.
+exit $?
+
